@@ -15,10 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 //import com.company.gdx.utils.GameType;
 
 public class MenuScreen extends AbstractScreen {
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
     private BitmapFont font24;
     private TextureAtlas atlas;
-    private KeyboardAdapter inputProcessor = new KeyboardAdapter();
+    private final KeyboardAdapter inputProcessor = new KeyboardAdapter();
     private Stage stage;
 
     public MenuScreen(SpriteBatch batch) {

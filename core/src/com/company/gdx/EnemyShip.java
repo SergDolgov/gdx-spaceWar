@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public class EnemyShip extends Ship{
     private Direction direction;
     private int timeMoved;
-    private float pursuilRadius;
+    private final float pursuilRadius;
     public EnemyShip(float x, float y, String textureName, int speed) {
         super(x, y, textureName, speed);
         this.timeMoved = 50;

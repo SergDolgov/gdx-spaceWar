@@ -11,16 +11,16 @@ public class Item extends MovableObject{
     public enum Type {
         SHIELD(0), MEDKIT(1);
 
-        int index;
+        final int index;
 
         Type(int index) {
             this.index = index;
         }
     }
-    private Vector2 velocity;
+    private final Vector2 velocity;
     private Type type;
     private float time;
-    private float timeMax;
+    private final float timeMax;
 
     public Item() {
         super(0,0,"",1);

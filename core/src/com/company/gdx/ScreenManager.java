@@ -14,7 +14,7 @@ public class ScreenManager {
         MENU, GAME, SETTINGS
     }
 
-    private static ScreenManager ourInstance = new ScreenManager();
+    private static final ScreenManager ourInstance = new ScreenManager();
 
     public static ScreenManager getInstance() {
         return ourInstance;

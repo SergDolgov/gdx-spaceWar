@@ -1,6 +1,5 @@
 package com.company.gdx;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,14 +11,14 @@ public abstract class MovableObject {
     private float halfSize = cellSize / 2;
     private final Vector2 position = new Vector2();
     private final Vector2 angle = new Vector2();
-    private Texture texture;
+    private final Texture texture;
 
     public void setTextureRegion(TextureRegion textureRegion) {
         this.textureRegion = textureRegion;
     }
 
     private TextureRegion textureRegion;
-    private int speed;
+    private final int speed;
     private boolean active;
 
     public boolean isActive() {
@@ -84,8 +83,6 @@ public abstract class MovableObject {
     }
     public void setPosition(Vector2 position) {
         setPosition(position.x,position.y);
-    }
-    public void moveTo() {
     }
 
     public int getCellSize() {

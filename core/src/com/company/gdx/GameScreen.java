@@ -18,7 +18,7 @@ import static com.company.gdx.ScreenManager.*;
 
 public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
-    private GameType gameType;
+    private final GameType gameType;
     private TextureAtlas atlas;
     private final static int MAX_BULLET_COUNT = 300;
     private Ship me;
@@ -54,11 +54,6 @@ public class GameScreen extends AbstractScreen {
 
         for (int i = 0; i < MAX_BULLET_COUNT;i++) bullets.add(new Bullet());
         for (int i = 0; i < 10; i++) items.add(new Item());
-
-        int x = MathUtils.random(WORLD_WIDTH);
-        int y = MathUtils.random(WORLD_HEIGHT);
-        //items.add(new Item());
-        //items.get(0).setup(x, y, Item.Type.values()[0]);
 
         text = "Heloo";
         text1 = "Heloo1";

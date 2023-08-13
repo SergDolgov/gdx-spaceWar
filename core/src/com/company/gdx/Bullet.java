@@ -9,21 +9,17 @@ public class Bullet extends MovableObject{
     public Ship getOwner() {
         return owner;
     }
-    private Vector2 velocity;
-    private int damage;
+    private final Vector2 velocity;
+    private final int damage;
     private float currentTime;
     private float maxTime;
-    private TextureRegion textureRegion1 = new TextureRegion(new Texture("projectile1.png"));
-    private TextureRegion textureRegion = new TextureRegion(new Texture("projectile.png"));
+    private final TextureRegion textureRegion1 = new TextureRegion(new Texture("projectile1.png"));
+    private final TextureRegion textureRegion = new TextureRegion(new Texture("projectile.png"));
     public Bullet () {
         super(0, 0, "projectile.png", 4, 10);
         this.velocity = new Vector2(1,1);
         setActive(false);
         this.damage = 0;
-    }
-
-    public void deactivate() {
-        setActive(false);
     }
 
     public void activate(Ship owner) {

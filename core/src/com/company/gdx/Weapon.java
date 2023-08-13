@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Weapon {
-    private TextureRegion textureRegion;
-    private float firePeriod;
-    private float radius;
-    private int damage;
-    private float projectileSpeed;
-    private float projectileLifeTime;
+    private final TextureRegion textureRegion;
+    private final float firePeriod;
+    private final float radius;
+    private final int damage;
+    private final float projectileSpeed;
+    private final float projectileLifeTime;
 
     public float getProjectileSpeed() {
         return projectileSpeed;
@@ -20,9 +20,6 @@ public class Weapon {
         return projectileLifeTime;
     }
 
-    public TextureRegion getTexture() {
-        return textureRegion;
-    }
 
     public float getFirePeriod() {
         return firePeriod;
@@ -32,9 +29,6 @@ public class Weapon {
         return damage;
     }
 
-    public float getRadius() {
-        return radius;
-    }
 
     public Weapon() {
         Texture texture = new Texture("Weapon.png");
