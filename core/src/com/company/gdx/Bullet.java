@@ -10,7 +10,7 @@ public class Bullet extends MovableObject{
         return owner;
     }
     private final Vector2 velocity;
-    private final int damage;
+    private int damage;
     private float currentTime;
     private float maxTime;
     private final TextureRegion textureRegion1 = new TextureRegion(new Texture("projectile1.png"));
