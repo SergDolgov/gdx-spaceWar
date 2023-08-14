@@ -42,8 +42,8 @@ public class GameScreen extends AbstractScreen {
     public void show () {
         screenTexture = new Texture("space.jpg");
         atlas = new TextureAtlas("game.pack");
-        Gdx.input.setInputProcessor(inputProcessor);
         itemRegions = new TextureRegion(atlas.findRegion("powerUps")).split(30, 30);
+        Gdx.input.setInputProcessor(inputProcessor);
 
         batch = new SpriteBatch();
         font = new BitmapFont();
@@ -113,9 +113,6 @@ public class GameScreen extends AbstractScreen {
             }
         });
 
-//        items.get(0).update(delta);
-//        items.get(0).render(batch);
-
 //        items.forEach(item -> {
 //            if (item.isActive()){
 //                item.update(delta);
@@ -167,8 +164,8 @@ public class GameScreen extends AbstractScreen {
                     enemies.add(new EnemyShip(x, y, "spaceship1.png", speed));
                 }
 
-                //generateRandomItem(3, 0.5f);
-                //regions = new TextureRegion(atlas.findRegion("powerUps")).split(30, 30);
+                //generateRandomItem(MathUtils.random(4), MathUtils.random(0.5f));
+
             }
         }
     }

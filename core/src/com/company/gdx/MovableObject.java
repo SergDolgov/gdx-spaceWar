@@ -90,13 +90,7 @@ public abstract class MovableObject {
     }
 
     public boolean canMove() {
-        if (!(position.x >= 0 && position.x <= WORLD_WIDTH && position.y >= cellSize && position.y <= WORLD_HEIGHT)){
-            if (position.x <= 0) position.x = 1;
-            if (position.y <= cellSize) position.y = cellSize + 1;
-            if (position.x >= WORLD_WIDTH) position.x = WORLD_WIDTH - 1;
-            if (position.y >= WORLD_HEIGHT) position.y = WORLD_HEIGHT - 1;
-            return false;
-        }
-        return true;
+        return  position.x >= 0 && position.x <= WORLD_WIDTH && position.y >= cellSize && position.y <= WORLD_HEIGHT;
     }
+
 }

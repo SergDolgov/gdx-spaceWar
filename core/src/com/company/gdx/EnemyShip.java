@@ -3,6 +3,9 @@ package com.company.gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.company.gdx.ScreenManager.WORLD_HEIGHT;
+import static com.company.gdx.ScreenManager.WORLD_WIDTH;
+
 public class EnemyShip extends Ship{
     private Direction direction;
     private int timeMoved;
@@ -19,8 +22,24 @@ public class EnemyShip extends Ship{
         return pursuilRadius;
     }
 
+    public int getTimeMoved() {
+        return timeMoved;
+    }
+
+    public void setTimeMoved(int timeMoved) {
+        this.timeMoved = timeMoved;
+    }
+
     @Override
     public void moveTo(Vector2 mePos) {
+        if (!canMove()) {
+            Vector2 position = getPosition();
+            if (position.x <= 0) position.x = 1;
+            if (position.y <= getCellSize()) position.y = getCellSize() + 1;
+            if (position.x >= WORLD_WIDTH) position.x = WORLD_WIDTH - 1;
+            if (position.y >= WORLD_HEIGHT) position.y = WORLD_HEIGHT - 1;
+            timeMoved = 0;
+        }
         if (timeMoved > 0) timeMoved --;
         else{
             timeMoved = 50;

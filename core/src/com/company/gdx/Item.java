@@ -1,5 +1,6 @@
 package com.company.gdx;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -23,7 +24,7 @@ public class Item extends MovableObject{
     private final float timeMax;
 
     public Item() {
-        super(0,0,"",1);
+        super(0,0, "Item.png",1);
         this.velocity = new Vector2(0, 0);
         this.type = Type.SHIELD;
         this.timeMax = 5.0f;
