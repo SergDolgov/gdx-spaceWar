@@ -10,7 +10,8 @@ public abstract class MovableObject {
     private int cellSize = 64;
     private float halfSize = cellSize / 2;
     private final Vector2 position = new Vector2();
-    private final Vector2 angle = new Vector2();
+    private Vector2 angle = new Vector2();
+
     private final Texture texture;
 
     public void setTextureRegion(TextureRegion textureRegion) {

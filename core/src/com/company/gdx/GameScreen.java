@@ -52,7 +52,7 @@ public class GameScreen extends AbstractScreen {
         font.setColor(Color.BLACK);
         gameTimer = 100.0f;
         me = new Ship("spaceship2.png", 64, ShipOwner.PLAYER);
-        me.activate(WORLD_WIDTH/2, 64, 6);
+        me.activate(WORLD_WIDTH/2 - 32, 64, 6);
 
         for (int i = 0; i < MAX_ENEMYS;i++) enemies.add(new EnemyShip("spaceship1.png", 64, ShipOwner.AI));
         for (int i = 0; i < MAX_BULLETS;i++) bullets.add(new Bullet("projectile.png", 10));
@@ -91,9 +91,9 @@ public class GameScreen extends AbstractScreen {
                         break;
                         }
                 if (!enemy.isDestroyed()) {
-                    enemy.moveTo(me.getPosition());
+                    enemy.moveTo();
+                    enemy.rotateTo(me.getPosition());
                     if (enemy.getPosition().dst(me.getPosition()) < enemy.getPursuilRadius()) {
-                        enemy.rotateTo(me.getPosition());
                         fire(enemy);
                         enemy.update(delta);
                     }
@@ -148,21 +148,22 @@ public class GameScreen extends AbstractScreen {
             gameTimer += dt;
             if (gameTimer > 15.0f) {
                 gameTimer = 0;
-                for (int i = 0; i < MAX_ENEMYS;i++) {
-                    //for (EnemyShip enemy : enemies)
-                        if(!enemies.get(i).isActive()) {
-                            int x = MathUtils.random(WORLD_WIDTH);
-                            int y = MathUtils.random(WORLD_HEIGHT);
-                            int speed = MathUtils.random(1, 4);
-                            enemies.get(i).activate(x, y, speed);
-                            break;
-                        }
-                }
-
-                generateRandomItem(MathUtils.random(4), MathUtils.random(0.5f));
-
+                generateRandomEnemits();
+                //generateRandomItem(MathUtils.random(4), MathUtils.random(0.5f));
             }
         }
+    }
+
+    private void generateRandomEnemits(){
+        for (int i = 0; i < 5;i++)
+            for (EnemyShip enemy : enemies)
+                if(!enemy.isActive()) {
+                    int x = MathUtils.random(WORLD_WIDTH);
+                    int y = WORLD_HEIGHT;
+                    int speed = MathUtils.random(1, 4);
+                    enemy.activate(x, y, speed);
+                    break;
+                }
     }
     public void generateRandomItem(int count, float probability) {
         for (int q = 0; q < count; q++) {

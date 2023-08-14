@@ -19,21 +19,20 @@ public class EnemyShip extends Ship{
     public void activate(float x, float y, int speed) {
         super.activate(x, y, speed);
         timeMoved = 50;
-        direction = Direction.values()[MathUtils.random(0, Direction.values().length - 1)];
+        direction = Direction.DOWN;
     }
 
     public float getPursuilRadius() {
         return pursuilRadius;
     }
 
-    @Override
-    public void moveTo(Vector2 mePos) {
+    public void moveTo() {
         if (!canMove()) timeMoved = 0;
         if (timeMoved > 0) timeMoved --;
         else{
             timeMoved = 50;
             direction = Direction.values()[MathUtils.random(0, Direction.values().length - 1)];
         }
-        super.moveTo(new Vector2(direction.getVx(), direction.getVy()));
+        moveTo(new Vector2(direction.getVx(), direction.getVy()));
     }
 }
