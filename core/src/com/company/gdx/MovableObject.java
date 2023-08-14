@@ -18,8 +18,8 @@ public abstract class MovableObject {
     }
 
     private TextureRegion textureRegion;
-    private final int speed;
-    private boolean active;
+    private int speed;
+    private boolean active = false;
 
     public boolean isActive() {
         return active;
@@ -42,33 +42,41 @@ public abstract class MovableObject {
         textureRegion = new TextureRegion(texture);
         this.speed = speed;
         position.set(x, y);
+        active = false;
     }
-
-    public MovableObject(float x, float y, String textureName, int speed, int cellSize) {
-        this(x, y, textureName, speed);
+    public MovableObject(String textureName, int cellSize) {
+        texture = new Texture(textureName);
+        textureRegion = new TextureRegion(texture);
         this.cellSize = cellSize;
         this.halfSize = cellSize / 2;
     }
-    public void render(Batch batch) {
-        if(isActive())
-            batch.draw(
-                textureRegion,
-                position.x,
-                position.y,
-                halfSize,
-                halfSize,
-                cellSize,
-                cellSize, 1, 1,
-                angle.angleDeg() - 90
-            );
+
+    public void activate(float x, float y, int speed) {
+        position.set(x, y);
+        this.speed = speed;
+        this.active = true;
     }
 
-    public void dispose() {
-        texture.dispose();
+    public void render(Batch batch) {
+        if(isActive()) {
+            if (!canMove()) update();
+            batch.draw(
+                    textureRegion,
+                    position.x,
+                    position.y,
+                    halfSize,
+                    halfSize,
+                    cellSize,
+                    cellSize, 1, 1,
+                    angle.angleDeg() - 90
+            );
+        }
     }
+
+    public void dispose() {texture.dispose();}
 
     public void moveTo(Vector2 direction) {
-        if (canMove()) position.add(direction.x * speed, direction.y * speed);
+        position.add(direction.x * speed, direction.y * speed);
     }
 
     public void rotateTo(Vector2 rotateTo) {
@@ -78,11 +86,9 @@ public abstract class MovableObject {
     public Vector2 getPosition() {
         return position;
     }
-    public void setPosition(float x, float y) {
-        position.set(x,y);
-    }
-    public void setPosition(Vector2 position) {
-        setPosition(position.x,position.y);
+
+    public void setPosition(Vector2 newPosition) {
+        position.set(newPosition);
     }
 
     public int getCellSize() {
@@ -90,7 +96,13 @@ public abstract class MovableObject {
     }
 
     public boolean canMove() {
-        return  position.x >= 0 && position.x <= WORLD_WIDTH && position.y >= cellSize && position.y <= WORLD_HEIGHT;
+        return  position.x > 0 && position.x < WORLD_WIDTH && position.y > cellSize && position.y < WORLD_HEIGHT;
     }
 
+    public void update(){
+        if (position.x <= 0) position.x = 1;
+        if (position.y <= cellSize) position.y = cellSize + 1;
+        if (position.x >= WORLD_WIDTH) position.x = WORLD_WIDTH - 1;
+        if (position.y >= WORLD_HEIGHT) position.y = WORLD_HEIGHT - 1;
+    }
 }

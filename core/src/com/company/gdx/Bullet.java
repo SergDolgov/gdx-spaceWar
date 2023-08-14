@@ -9,17 +9,17 @@ public class Bullet extends MovableObject{
     public Ship getOwner() {
         return owner;
     }
-    private final Vector2 velocity;
+    private Vector2 velocity = new Vector2();
     private int damage;
     private float currentTime;
     private float maxTime;
     private final TextureRegion textureRegion1 = new TextureRegion(new Texture("projectile1.png"));
     private final TextureRegion textureRegion = new TextureRegion(new Texture("projectile.png"));
-    public Bullet () {
-        super(0, 0, "projectile.png", 4, 10);
-        this.velocity = new Vector2(1,1);
-        setActive(false);
-        this.damage = 0;
+
+    public Bullet (String textureName, int cellSize) {
+        super(textureName, cellSize);
+        velocity.set(1, 1);
+        damage=0;
     }
 
     public void activate(Ship owner) {
@@ -34,11 +34,12 @@ public class Bullet extends MovableObject{
         if(owner.getOwnerType() == ShipOwner.AI)
             this.setTextureRegion(textureRegion1);
         else {
-            this.velocity.scl(2);
+            this.velocity.scl(4);
             this.setTextureRegion(textureRegion);
         }
 
         setPosition(owner.getPosition());
+        this.getPosition().add(32,32);
 
         setActive(true);
         this.damage = weapon.getDamage();
@@ -46,7 +47,7 @@ public class Bullet extends MovableObject{
         this.currentTime = 0.0f;
     }
 
-    public void moveTo(float delta) {
+    public void moveTo() {
         getPosition().add(velocity);
         currentTime += 1;
         if (!canMove() || currentTime >= maxTime) deactivate();

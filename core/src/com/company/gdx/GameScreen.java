@@ -20,11 +20,13 @@ public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
     private final GameType gameType;
     private TextureAtlas atlas;
-    private final static int MAX_BULLET_COUNT = 300;
+    private final static int MAX_ENEMYS = 20;
+    private final static int MAX_BULLETS = 300;
+    private final static int MAX_ITEMS = 10;
     private Ship me;
-    private final List<EnemyShip> enemies = new ArrayList<>();
-    private final List<Bullet> bullets = new ArrayList(MAX_BULLET_COUNT);
-    private final List<Item> items = new ArrayList(10);
+    private final List<EnemyShip> enemies = new ArrayList<>(MAX_ENEMYS);
+    private final List<Bullet> bullets = new ArrayList(MAX_BULLETS);
+    private final List<Item> items = new ArrayList(MAX_ITEMS);
     private KeyboardAdapter inputProcessor = new KeyboardAdapter();
 
     private Texture screenTexture;
@@ -49,15 +51,15 @@ public class GameScreen extends AbstractScreen {
         font = new BitmapFont();
         font.setColor(Color.BLACK);
         gameTimer = 100.0f;
-        me = new Ship(100, 200, 4);
-        me.setActive(true);
+        me = new Ship("spaceship2.png", 64, ShipOwner.PLAYER);
+        me.activate(WORLD_WIDTH/2, 64, 6);
 
-        for (int i = 0; i < MAX_BULLET_COUNT;i++) bullets.add(new Bullet());
-        for (int i = 0; i < 10; i++) items.add(new Item());
+        for (int i = 0; i < MAX_ENEMYS;i++) enemies.add(new EnemyShip("spaceship1.png", 64, ShipOwner.AI));
+        for (int i = 0; i < MAX_BULLETS;i++) bullets.add(new Bullet("projectile.png", 10));
+        for (int i = 0; i < MAX_ITEMS; i++) items.add(new Item());
 
         text = "Heloo";
-        text1 = "Heloo1";
-        text2 = "Heloo2";
+
     }
 
     @Override
@@ -65,10 +67,7 @@ public class GameScreen extends AbstractScreen {
         
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) paused = !paused;
 
-        if (paused) {
-            font.draw(batch, "Pause" ,50, 580);
-            return;
-        }
+        if (paused) return;
 
         update(delta);
 
@@ -87,15 +86,11 @@ public class GameScreen extends AbstractScreen {
             if(enemy.isActive()){
                 for (Bullet bullet : bullets)
                     if (bullet.isActive() && checkIntersection(bullet, enemy)) {
-                        Vector2 bulletPos = bullet.getPosition();
-                        Vector2 enemyPos = enemy.getPosition();
-                        text = "bullet(" + (int)bulletPos.x + ";" +(int)bulletPos.y+"; "+ bullet.getCellSize()
-                                +") Velocity("+ (int)enemyPos.x+";"+(int)enemyPos.y+"; "+ enemy.getCellSize()+")";
                         bullet.deactivate();
                         enemy.deactivate();
                         break;
                         }
-                if (!enemy.destroyed) {
+                if (!enemy.isDestroyed()) {
                     enemy.moveTo(me.getPosition());
                     if (enemy.getPosition().dst(me.getPosition()) < enemy.getPursuilRadius()) {
                         enemy.rotateTo(me.getPosition());
@@ -108,24 +103,19 @@ public class GameScreen extends AbstractScreen {
 
         bullets.forEach(bullet -> {
             if (bullet.isActive()){
-                bullet.moveTo(delta);
+                bullet.moveTo();
                 bullet.render(batch);
             }
         });
 
-//        items.forEach(item -> {
-//            if (item.isActive()){
-//                item.update(delta);
-//                item.render(batch, itemRegions);
-//                Vector2 pos = item.getPosition();
-//                Vector2 moosePos = item.getPosition();
-//                text2 = "pos(" + (int)pos.x + ";" +(int)pos.y+") Velocity("+ (int)moosePos.x+";"+(int)moosePos.y+")";
-//            }
-//        });
+        items.forEach(item -> {
+            if (item.isActive()){
+                item.update(delta);
+                item.render(batch, itemRegions);
+            }
+        });
 
         font.draw(batch, text ,30, 620);
-        font.draw(batch, text1 ,30, 600);
-        font.draw(batch, text2 ,30, 580);
 
         batch.end();
 
@@ -133,6 +123,7 @@ public class GameScreen extends AbstractScreen {
     private void fire(Ship ship){
         for (Bullet bullet : bullets)
             if (!bullet.isActive()){
+                text = bullet.toString();
                 ship.fire(bullet);
                 return;
             }
@@ -157,14 +148,18 @@ public class GameScreen extends AbstractScreen {
             gameTimer += dt;
             if (gameTimer > 15.0f) {
                 gameTimer = 0;
-                for (int i = 0; i < 5;i++) {
-                    int x = MathUtils.random(WORLD_WIDTH);
-                    int y = MathUtils.random(WORLD_HEIGHT);
-                    int speed = MathUtils.random(1, 4);
-                    enemies.add(new EnemyShip(x, y, "spaceship1.png", speed));
+                for (int i = 0; i < MAX_ENEMYS;i++) {
+                    //for (EnemyShip enemy : enemies)
+                        if(!enemies.get(i).isActive()) {
+                            int x = MathUtils.random(WORLD_WIDTH);
+                            int y = MathUtils.random(WORLD_HEIGHT);
+                            int speed = MathUtils.random(1, 4);
+                            enemies.get(i).activate(x, y, speed);
+                            break;
+                        }
                 }
 
-                //generateRandomItem(MathUtils.random(4), MathUtils.random(0.5f));
+                generateRandomItem(MathUtils.random(4), MathUtils.random(0.5f));
 
             }
         }
@@ -178,7 +173,7 @@ public class GameScreen extends AbstractScreen {
                     if (!item.isActive()) {
                         int x = MathUtils.random(WORLD_WIDTH);
                         int y = MathUtils.random(WORLD_HEIGHT);
-                        item.setup(x, y, Item.Type.values()[type]);
+                        item.activate(x, y, Item.Type.values()[type]);
                         break;
                     }
                 }

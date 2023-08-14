@@ -18,22 +18,22 @@ public class Item extends MovableObject{
             this.index = index;
         }
     }
-    private final Vector2 velocity;
+    private Vector2 velocity;
     private Type type;
     private float time;
-    private final float timeMax;
+    private float timeMax;
 
     public Item() {
         super(0,0, "Item.png",1);
-        this.velocity = new Vector2(0, 0);
+        //this.velocity = new Vector2(0, 0);
         this.type = Type.SHIELD;
         this.timeMax = 5.0f;
         this.time = 0.0f;
         setActive(false);
     }
 
-    public void setup(float x, float y, Type type) {
-        setPosition(x, y);
+    public void activate(float x, float y, Type type) {
+        setPosition(new Vector2(x, y));
         this.velocity.set(MathUtils.random(-50, 50), MathUtils.random(-50, 50));
         this.type = type;
         this.time = 0.0f;

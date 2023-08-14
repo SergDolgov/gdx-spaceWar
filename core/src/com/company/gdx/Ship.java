@@ -8,23 +8,31 @@ public class Ship extends MovableObject{
     private final Texture textureExplosion;
     private float fireTimer, expTimer;
     private  ShipOwner ownerType;
+    private boolean destroyed;
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
     public ShipOwner getOwnerType() {
         return ownerType;
     }
-    boolean destroyed;
-    public Ship(float x, float y, int speed) {
-        this(x, y, "spaceship2.png", speed);
-        ownerType = ShipOwner.PLAYER;
+
+    public Ship(String textureName, int cellSize, ShipOwner ownerType) {
+        super(textureName, cellSize);
+        this.ownerType = ownerType;
+        weapon = new Weapon();
+        textureExplosion = new Texture("explosion.png");
     }
 
-    public Ship(float x, float y, String textureName, int speed) {
-        super(x, y, textureName, speed);
-        ownerType = ShipOwner.AI;
-        this.weapon = new Weapon();
-        textureExplosion = new Texture("explosion.png");
+    @Override
+    public void activate(float x, float y, int speed) {
+        super.activate(x, y, speed);
+        //this.weapon = new Weapon();
         expTimer = 0;
         destroyed = false;
+        //fireTimer = weapon.getFirePeriod();
     }
+
     public void fire(Bullet bullet) {
         if (fireTimer >= weapon.getFirePeriod()) {
             fireTimer = 0.0f;
@@ -53,4 +61,5 @@ public class Ship extends MovableObject{
         //двигаем каждый кадр окружность за танком
        // circle.setPosition(position);
     }
+
 }

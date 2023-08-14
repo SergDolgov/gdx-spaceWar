@@ -10,36 +10,25 @@ public class EnemyShip extends Ship{
     private Direction direction;
     private int timeMoved;
     private final float pursuilRadius;
-    public EnemyShip(float x, float y, String textureName, int speed) {
-        super(x, y, textureName, speed);
-        this.timeMoved = 50;
-        this.direction = Direction.values()[MathUtils.random(0, Direction.values().length - 1)];
-        setActive(true);
+    public EnemyShip(String textureName, int cellSize, ShipOwner ownerType) {
+        super(textureName, cellSize, ownerType);
         pursuilRadius = 300.0f;
+    }
+
+    @Override
+    public void activate(float x, float y, int speed) {
+        super.activate(x, y, speed);
+        timeMoved = 50;
+        direction = Direction.values()[MathUtils.random(0, Direction.values().length - 1)];
     }
 
     public float getPursuilRadius() {
         return pursuilRadius;
     }
 
-    public int getTimeMoved() {
-        return timeMoved;
-    }
-
-    public void setTimeMoved(int timeMoved) {
-        this.timeMoved = timeMoved;
-    }
-
     @Override
     public void moveTo(Vector2 mePos) {
-        if (!canMove()) {
-            Vector2 position = getPosition();
-            if (position.x <= 0) position.x = 1;
-            if (position.y <= getCellSize()) position.y = getCellSize() + 1;
-            if (position.x >= WORLD_WIDTH) position.x = WORLD_WIDTH - 1;
-            if (position.y >= WORLD_HEIGHT) position.y = WORLD_HEIGHT - 1;
-            timeMoved = 0;
-        }
+        if (!canMove()) timeMoved = 0;
         if (timeMoved > 0) timeMoved --;
         else{
             timeMoved = 50;
