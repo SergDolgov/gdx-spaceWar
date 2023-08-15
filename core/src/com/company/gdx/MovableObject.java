@@ -7,20 +7,18 @@ import com.badlogic.gdx.math.Vector2;
 import static com.company.gdx.ScreenManager.*;
 
 public abstract class MovableObject {
-    private int cellSize = 64;
-    private float halfSize = cellSize / 2;
+    private int cellSize;
+    private float halfSize;
     private final Vector2 position = new Vector2();
     private Vector2 angle = new Vector2();
-
     private final Texture texture;
+    private TextureRegion textureRegion;
+    private int speed;
+    private boolean active = false;
 
     public void setTextureRegion(TextureRegion textureRegion) {
         this.textureRegion = textureRegion;
     }
-
-    private TextureRegion textureRegion;
-    private int speed;
-    private boolean active = false;
 
     public boolean isActive() {
         return active;
@@ -38,13 +36,6 @@ public abstract class MovableObject {
         this.active = active;
     }
 
-    public MovableObject(float x, float y, String textureName, int speed) {
-        texture = new Texture(textureName);
-        textureRegion = new TextureRegion(texture);
-        this.speed = speed;
-        position.set(x, y);
-        active = false;
-    }
     public MovableObject(String textureName, int cellSize) {
         texture = new Texture(textureName);
         textureRegion = new TextureRegion(texture);
@@ -60,7 +51,7 @@ public abstract class MovableObject {
 
     public void render(Batch batch) {
         if(isActive()) {
-            if (!canMove()) update();
+            if (!canMove()) updatePosition();
             batch.draw(
                     textureRegion,
                     position.x,
@@ -100,7 +91,7 @@ public abstract class MovableObject {
         return  position.x > 0 && position.x < WORLD_WIDTH && position.y > cellSize && position.y < WORLD_HEIGHT;
     }
 
-    public void update(){
+    public void updatePosition(){
         if (position.x <= 0) position.x = 1;
         if (position.y <= cellSize) position.y = cellSize + 1;
         if (position.x >= WORLD_WIDTH) position.x = WORLD_WIDTH - 1;

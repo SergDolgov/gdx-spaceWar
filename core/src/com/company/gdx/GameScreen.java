@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ import static com.company.gdx.ScreenManager.*;
 public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
     private final GameType gameType;
-    private TextureAtlas atlas;
+   // private TextureAtlas atlas;
     private final static int MAX_ENEMYS = 20;
     private final static int MAX_BULLETS = 300;
     private final static int MAX_ITEMS = 10;
@@ -35,7 +34,7 @@ public class GameScreen extends AbstractScreen {
     private boolean paused;
     private float gameTimer;
     private float worldTimer;
-    private TextureRegion[][] itemRegions;
+    //private TextureRegion[][] itemRegions;
     public GameScreen(SpriteBatch batch) {
         this.batch = batch;
         this.gameType = GameType.ONE_PLAYER;
@@ -43,8 +42,8 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void show () {
         screenTexture = new Texture("space.jpg");
-        atlas = new TextureAtlas("game.pack");
-        itemRegions = new TextureRegion(atlas.findRegion("powerUps")).split(30, 30);
+//        atlas = new TextureAtlas("game.pack");
+//        itemRegions = new TextureRegion(atlas.findRegion("powerUps")).split(30, 30);
         Gdx.input.setInputProcessor(inputProcessor);
 
         batch = new SpriteBatch();
@@ -55,7 +54,7 @@ public class GameScreen extends AbstractScreen {
         me.activate(WORLD_WIDTH/2 - 32, 64, 6);
 
         for (int i = 0; i < MAX_ENEMYS;i++) enemies.add(new EnemyShip("spaceship1.png", 64, ShipOwner.AI));
-        for (int i = 0; i < MAX_BULLETS;i++) bullets.add(new Bullet("projectile.png", 10));
+        for (int i = 0; i < MAX_BULLETS;i++) bullets.add(new Bullet());
         for (int i = 0; i < MAX_ITEMS; i++) items.add(new Item());
 
         text = "Heloo";
@@ -73,7 +72,6 @@ public class GameScreen extends AbstractScreen {
 
         me.moveTo(inputProcessor.getDirection());
         me.rotateTo(inputProcessor.getMousePos());
-        me.update(delta);
 
         batch.begin();
         batch.draw(screenTexture,0,0);
@@ -95,7 +93,6 @@ public class GameScreen extends AbstractScreen {
                     enemy.rotateTo(me.getPosition());
                     if (enemy.getPosition().dst(me.getPosition()) < enemy.getPursuilRadius()) {
                         fire(enemy);
-                        enemy.update(delta);
                     }
                 }
                 enemy.render(batch);
@@ -110,8 +107,8 @@ public class GameScreen extends AbstractScreen {
 
         items.forEach(item -> {
             if (item.isActive()){
-                item.update(delta);
-                item.render(batch, itemRegions);
+                item.moveTo(delta);
+                item.render(batch);
             }
         });
 
@@ -123,7 +120,7 @@ public class GameScreen extends AbstractScreen {
     private void fire(Ship ship){
         for (Bullet bullet : bullets)
             if (!bullet.isActive()){
-                text = bullet.toString();
+                //text = bullet.toString();
                 ship.fire(bullet);
                 return;
             }
@@ -149,7 +146,8 @@ public class GameScreen extends AbstractScreen {
             if (gameTimer > 15.0f) {
                 gameTimer = 0;
                 generateRandomEnemits();
-                //generateRandomItem(MathUtils.random(4), MathUtils.random(0.5f));
+                int itemCount = MathUtils.random(4);
+                generateRandomItem(3, MathUtils.random(0.5f));
             }
         }
     }

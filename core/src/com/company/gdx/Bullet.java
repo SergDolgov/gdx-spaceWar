@@ -16,8 +16,8 @@ public class Bullet extends MovableObject{
     private final TextureRegion textureRegion1 = new TextureRegion(new Texture("projectile1.png"));
     private final TextureRegion textureRegion = new TextureRegion(new Texture("projectile.png"));
 
-    public Bullet (String textureName, int cellSize) {
-        super(textureName, cellSize);
+    public Bullet () {
+        super("projectile.png", 10);
         velocity.set(1, 1);
         damage=0;
     }

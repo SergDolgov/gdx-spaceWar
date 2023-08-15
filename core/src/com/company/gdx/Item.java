@@ -1,7 +1,7 @@
 package com.company.gdx;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -18,37 +18,34 @@ public class Item extends MovableObject{
             this.index = index;
         }
     }
-    private Vector2 velocity;
-    private Type type;
+    private Vector2 velocity = new Vector2();;
+    private Type type = Type.SHIELD;;
     private float time;
     private float timeMax;
+    private final static TextureAtlas atlas = new TextureAtlas("powerUp.pack");
+    private final static TextureRegion[][] itemRegions = new TextureRegion(atlas.findRegion("powerUps")).split(60, 60);
 
     public Item() {
-        super(0,0, "Item.png",1);
-        //this.velocity = new Vector2(0, 0);
-        this.type = Type.SHIELD;
-        this.timeMax = 5.0f;
-        this.time = 0.0f;
-        setActive(false);
+        super("Item.png",60);
     }
 
     public void activate(float x, float y, Type type) {
-        setPosition(new Vector2(x, y));
+        super.activate(x, y, 1);
         this.velocity.set(MathUtils.random(-50, 50), MathUtils.random(-50, 50));
         this.type = type;
-        this.time = 0.0f;
-        setActive(true);
+        timeMax = 5.0f;
+        time = 0.0f;
     }
 
-    public void render(Batch batch, TextureRegion[][] regions) {
+    public void render(Batch batch) {
        // super.render(batch);
         if (isActive()) {
-            int frameIndex = (int) (time / 0.2f) % regions[type.index].length;
-            batch.draw(regions[type.index][frameIndex], getPosition().x - 15, getPosition().y - 15);
+            int frameIndex = (int) (time / 0.2f) % itemRegions[type.index].length;
+            batch.draw(itemRegions[type.index][frameIndex], getPosition().x - 15, getPosition().y - 15);
         }
     }
 
-    public void update(float dt) {
+    public void moveTo(float dt) {
         time += dt;
         getPosition().mulAdd(velocity, dt);
         if (time > timeMax) {

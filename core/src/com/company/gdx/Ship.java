@@ -30,7 +30,7 @@ public class Ship extends MovableObject{
         //this.weapon = new Weapon();
         expTimer = 0;
         destroyed = false;
-        //fireTimer = weapon.getFirePeriod();
+        fireTimer = weapon.getFirePeriod();
     }
 
     public void fire(Bullet bullet) {
@@ -42,6 +42,7 @@ public class Ship extends MovableObject{
 
     @Override
     public void render(Batch batch) {
+        fireTimer += 0.02;
         if (expTimer > 0) {
             expTimer--;
             batch.draw(textureExplosion, getPosition().x, getPosition().y);
@@ -54,12 +55,6 @@ public class Ship extends MovableObject{
     @Override
     public void deactivate() {
         if (expTimer <= 0) expTimer = 5; destroyed=true;
-    }
-
-    public void update(float dt) {
-        fireTimer += dt;
-        //двигаем каждый кадр окружность за танком
-       // circle.setPosition(position);
     }
 
 }
