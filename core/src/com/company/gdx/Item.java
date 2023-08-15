@@ -45,9 +45,9 @@ public class Item extends MovableObject{
         }
     }
 
-    public void moveTo(float dt) {
-        time += dt;
-        getPosition().mulAdd(velocity, dt);
+    public void moveTo() {
+        time += 0.03;
+        getPosition().mulAdd(velocity, 0.03f);
         if (time > timeMax) {
             deactivate();
         }
