@@ -7,10 +7,10 @@ import com.badlogic.gdx.math.Vector2;
 import static com.company.gdx.ScreenManager.*;
 
 public abstract class MovableObject {
-    private int cellSize;
-    private float halfSize;
+    private final int cellSize;
+    private final float halfSize;
     private final Vector2 position = new Vector2();
-    private Vector2 angle = new Vector2();
+    private final Vector2 angle = new Vector2();
     private final Texture texture;
     private TextureRegion textureRegion;
     private int speed;
@@ -50,25 +50,21 @@ public abstract class MovableObject {
     }
 
     public void render(Batch batch) {
-        if(isActive()) {
-            if (!canMove()) updatePosition();
             batch.draw(
                     textureRegion,
-                    position.x,
-                    position.y,
-                    halfSize,
-                    halfSize,
-                    cellSize,
-                    cellSize, 1, 1,
-                    angle.angleDeg() - 90
-            );
-        }
+                    position.x, position.y,
+                    halfSize, halfSize,
+                    cellSize, cellSize, 1, 1,
+                    angle.angleDeg() - 90);
     }
 
     public void dispose() {texture.dispose();}
 
     public void moveTo(Vector2 direction) {
-        position.add(direction.x * speed, direction.y * speed);
+        if(isActive()) {
+            if (!canMove()) updatePosition();
+            position.add(direction.x * speed, direction.y * speed);
+        }
     }
 
     public void rotateTo(Vector2 rotateTo) {

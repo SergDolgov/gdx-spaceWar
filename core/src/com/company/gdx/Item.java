@@ -11,17 +11,21 @@ public class Item extends MovableObject{
 
     public enum Type {
         SHIELD(0), MEDKIT(1);
-
         final int index;
-
         Type(int index) {
             this.index = index;
         }
     }
-    private Vector2 velocity = new Vector2();;
-    private Type type = Type.SHIELD;;
+    private final Vector2 velocity = new Vector2();
+    private Type type = Type.SHIELD;
     private float time;
     private float timeMax;
+    private int damage;
+
+    public int getDamage() {
+        return damage;
+    }
+
     private final static TextureAtlas atlas = new TextureAtlas("powerUp.pack");
     private final static TextureRegion[][] itemRegions = new TextureRegion(atlas.findRegion("powerUps")).split(60, 60);
 
@@ -33,8 +37,9 @@ public class Item extends MovableObject{
         super.activate(x, y, 1);
         this.velocity.set(MathUtils.random(-50, 50), MathUtils.random(-50, 50));
         this.type = type;
-        timeMax = 5.0f;
+        timeMax = 7.0f;
         time = 0.0f;
+        damage = 10;
     }
 
     public void render(Batch batch) {
@@ -52,4 +57,6 @@ public class Item extends MovableObject{
             deactivate();
         }
     }
+
+
 }

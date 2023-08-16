@@ -1,42 +1,52 @@
 package com.company.gdx;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Weapon {
+    public enum Type {
+        SMALL(0, 60, 1, 500, 2),
+        MEDIUM(1, 20, 2, 700, 4);
+        final int index;
+        final int firePeriod;
+        final int damage;
+        final int radius;
+        final int projectileSpeed;
+        Type(int index, int firePeriod, int damage, int radius, int projectileSpeed) {
+            this.index = index;
+            this.firePeriod = firePeriod;
+            this.damage = damage;
+            this.radius = radius;
+            this.projectileSpeed = projectileSpeed;
+        }
+    }
     private final TextureRegion textureRegion;
-    private final float firePeriod;
-    private final float radius;
-    private final int damage;
-    private final float projectileSpeed;
+    private Type type = Type.SMALL;
     private final float projectileLifeTime;
 
     public float getProjectileSpeed() {
-        return projectileSpeed;
+        return type.projectileSpeed;
     }
 
     public float getProjectileLifeTime() {
         return projectileLifeTime;
     }
 
-
-    public float getFirePeriod() {
-        return firePeriod;
+    public int getFirePeriod() {
+        return type.firePeriod;
     }
 
     public int getDamage() {
-        return damage;
+        return type.damage;
     }
 
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     public Weapon() {
         Texture texture = new Texture("Weapon.png");
         textureRegion = new TextureRegion(texture);
-        this.firePeriod = 0.7f;
-        this.damage = 1;
-        this.radius = 500.0f;
-        this.projectileSpeed = 3.0f;
-        this.projectileLifeTime = this.radius / this.projectileSpeed;
+        this.projectileLifeTime = this.type.radius / this.type.projectileSpeed;
     }
 }

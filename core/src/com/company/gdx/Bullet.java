@@ -4,12 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.company.gdx.ScreenManager.WORLD_HEIGHT;
+import static com.company.gdx.ScreenManager.WORLD_WIDTH;
+
 public class Bullet extends MovableObject{
     private Ship owner;
     public Ship getOwner() {
         return owner;
     }
-    private Vector2 velocity = new Vector2();
+    private final Vector2 velocity = new Vector2();
     private int damage;
     private float currentTime;
     private float maxTime;
@@ -18,8 +21,7 @@ public class Bullet extends MovableObject{
 
     public Bullet () {
         super("projectile.png", 10);
-        velocity.set(1, 1);
-        damage=0;
+
     }
 
     public void activate(Ship owner) {
@@ -49,8 +51,15 @@ public class Bullet extends MovableObject{
 
     public void moveTo() {
         getPosition().add(velocity);
+        Vector2 position = getPosition();
         currentTime += 1;
-        if (!canMove() || currentTime >= maxTime) deactivate();
+        if (!(position.x > 0 && position.x < WORLD_WIDTH + owner.getCellSize()
+                && position.y > 0 && position.y < WORLD_HEIGHT + owner.getCellSize())
+                || currentTime >= maxTime) deactivate();
+    }
+
+    public int getDamage() {
+        return damage;
     }
 
 }
