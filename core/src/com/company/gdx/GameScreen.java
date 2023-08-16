@@ -20,9 +20,9 @@ public class GameScreen extends AbstractScreen {
     private final static int MAX_BULLETS = 300;
     private final static int MAX_ITEMS = 10;
     private Ship playerShip;
-    private final List<EnemyShip> enemies = new ArrayList(MAX_ENEMYS);
-    private final List<Bullet> bullets = new ArrayList(MAX_BULLETS);
-    private final List<Item> items = new ArrayList(MAX_ITEMS);
+    private final List<EnemyShip> enemies = new ArrayList<>(MAX_ENEMYS);
+    private final List<Bullet> bullets = new ArrayList<>(MAX_BULLETS);
+    private final List<Item> items = new ArrayList<>(MAX_ITEMS);
     private final KeyboardAdapter inputProcessor = new KeyboardAdapter();
     private Texture screenTexture;
     private BitmapFont font;
