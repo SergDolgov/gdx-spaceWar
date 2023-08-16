@@ -1,7 +1,5 @@
 package com.company.gdx;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Weapon {
     public enum Type {
