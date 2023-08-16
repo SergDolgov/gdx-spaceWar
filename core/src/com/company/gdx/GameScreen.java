@@ -15,12 +15,12 @@ import static com.company.gdx.ScreenManager.*;
 
 public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
-    private final GameType gameType;
-    private final static int MAX_ENEMYS = 12;
+    private final GameType gameType; 
+    private final static int MAX_ENEMIES = 12;
     private final static int MAX_BULLETS = 300;
     private final static int MAX_ITEMS = 10;
     private Ship playerShip;
-    private final List<EnemyShip> enemies = new ArrayList<>(MAX_ENEMYS);
+    private final List<EnemyShip> enemies = new ArrayList<>(MAX_ENEMIES);
     private final List<Bullet> bullets = new ArrayList<>(MAX_BULLETS);
     private final List<Item> items = new ArrayList<>(MAX_ITEMS);
     private final KeyboardAdapter inputProcessor = new KeyboardAdapter();
@@ -53,7 +53,7 @@ public class GameScreen extends AbstractScreen {
 
     private void initCollections() {
         initPlayer();
-        for (int i = 0; i < MAX_ENEMYS; i++) enemies.add(new EnemyShip("spaceship1.png", 64, ShipOwner.AI));
+        for (int i = 0; i < MAX_ENEMIES; i++) enemies.add(new EnemyShip("spaceship1.png", 64, ShipOwner.AI));
         for (int i = 0; i < MAX_BULLETS;i++) bullets.add(new Bullet());
         for (int i = 0; i < MAX_ITEMS; i ++) items.add(new Item());
     }
