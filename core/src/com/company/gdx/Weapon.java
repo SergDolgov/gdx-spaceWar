@@ -20,7 +20,6 @@ public class Weapon {
             this.projectileSpeed = projectileSpeed;
         }
     }
-    private final TextureRegion textureRegion;
     private Type type = Type.SMALL;
     private final float projectileLifeTime;
 
@@ -45,8 +44,6 @@ public class Weapon {
     }
 
     public Weapon() {
-        Texture texture = new Texture("Weapon.png");
-        textureRegion = new TextureRegion(texture);
         this.projectileLifeTime = this.type.radius / this.type.projectileSpeed;
     }
 }

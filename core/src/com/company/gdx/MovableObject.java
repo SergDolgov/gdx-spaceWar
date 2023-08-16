@@ -62,7 +62,7 @@ public abstract class MovableObject {
 
     public void moveTo(Vector2 direction) {
         if(isActive()) {
-            if (!canMove()) updatePosition();
+            if (notCanMove()) updatePosition();
             position.add(direction.x * speed, direction.y * speed);
         }
     }
@@ -83,8 +83,8 @@ public abstract class MovableObject {
         return cellSize;
     }
 
-    public boolean canMove() {
-        return  position.x > 0 && position.x < WORLD_WIDTH && position.y > cellSize && position.y < WORLD_HEIGHT;
+    public boolean notCanMove() {
+        return  (position.x > 0 && position.x < WORLD_WIDTH && position.y > cellSize && position.y < WORLD_HEIGHT);
     }
 
     public void updatePosition(){

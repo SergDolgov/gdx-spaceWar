@@ -3,9 +3,6 @@ package com.company.gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
-import static com.company.gdx.ScreenManager.WORLD_HEIGHT;
-import static com.company.gdx.ScreenManager.WORLD_WIDTH;
-
 public class EnemyShip extends Ship{
     private Direction direction;
     private int timeMoved;
@@ -27,7 +24,7 @@ public class EnemyShip extends Ship{
     }
 
     public void moveTo() {
-        if (!canMove()) timeMoved = 0;
+        if (notCanMove()) timeMoved = 0;
         if (timeMoved > 0) timeMoved --;
         else{
             timeMoved = 50;
