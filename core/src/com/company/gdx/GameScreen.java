@@ -80,7 +80,7 @@ public class GameScreen extends AbstractScreen {
         batch.draw(screenTexture,0,0);
         renderAll(batch);
 
-        text = "Hp - " + playerShip.hp;
+        text = "Current Hp = " + playerShip.hp;
 
         font.draw(batch, text ,30, 620);
         batch.end();

@@ -20,17 +20,13 @@ public abstract class MovableObject {
         this.textureRegion = textureRegion;
     }
 
-    public boolean isActive() {
-        return active;
-    }
+    public boolean isActive() {return active;}
 
     public Vector2 getAngle() {
         return angle;
     }
 
-    public void deactivate() {
-        setActive(false);
-    }
+    public void deactivate() {setActive(false);}
 
     public void setActive(boolean active) {
         this.active = active;
@@ -67,24 +63,18 @@ public abstract class MovableObject {
         }
     }
 
-    public void rotateTo(Vector2 rotateTo) {
-        angle.set(rotateTo).sub(position.x + halfSize, position.y + halfSize);
-    }
+    public void rotateTo(Vector2 rotateTo) {angle.set(rotateTo).sub(position.x + halfSize, position.y + halfSize);}
 
-    public Vector2 getPosition() {
-        return position;
-    }
+    public Vector2 getPosition() {return position;}
 
-    public void setPosition(Vector2 newPosition) {
-        position.set(newPosition);
-    }
+    public void setPosition(Vector2 newPosition) {position.set(newPosition);}
 
     public int getCellSize() {
         return cellSize;
     }
 
     public boolean notCanMove() {
-        return  (position.x > 0 && position.x < WORLD_WIDTH && position.y > cellSize && position.y < WORLD_HEIGHT);
+        return  !(position.x > 0 && position.x < WORLD_WIDTH && position.y > cellSize && position.y < WORLD_HEIGHT);
     }
 
     public void updatePosition(){
