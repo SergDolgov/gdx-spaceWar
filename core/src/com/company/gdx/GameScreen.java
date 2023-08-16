@@ -23,7 +23,7 @@ public class GameScreen extends AbstractScreen {
     private final List<EnemyShip> enemies = new ArrayList(MAX_ENEMYS);
     private final List<Bullet> bullets = new ArrayList(MAX_BULLETS);
     private final List<Item> items = new ArrayList(MAX_ITEMS);
-    private KeyboardAdapter inputProcessor = new KeyboardAdapter();
+    private final KeyboardAdapter inputProcessor = new KeyboardAdapter();
     private Texture screenTexture;
     private BitmapFont font;
     private String text, text1, text2;
