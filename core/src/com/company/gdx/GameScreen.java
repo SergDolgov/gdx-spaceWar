@@ -26,7 +26,7 @@ public class GameScreen extends AbstractScreen {
     private final KeyboardAdapter inputProcessor = new KeyboardAdapter();
     private Texture screenTexture;
     private BitmapFont font;
-    private String text, text1, text2;
+    private String text;
     private boolean paused;
     private float gameTimer;
     private float worldTimer;
@@ -79,9 +79,11 @@ public class GameScreen extends AbstractScreen {
         batch.begin();
         batch.draw(screenTexture,0,0);
         renderAll(batch);
+
+        text = "Hp - " + playerShip.hp;
+
         font.draw(batch, text ,30, 620);
         batch.end();
-
     }
 
     private void renderAll(Batch batch){
