@@ -57,7 +57,6 @@ public class ScreenManager {
     }
 
     public void setScreen(ScreenType screenType, Object... args) {
-       // Gdx.input.setCursorCatched(false);
         Screen currentScreen = game.getScreen();
         switch (screenType) {
             case MENU:

@@ -80,7 +80,6 @@ public class MenuScreen extends AbstractScreen {
         group.setPosition(580, 100);
         stage.addActor(group);
         Gdx.input.setInputProcessor(stage);
-        //Gdx.input.setInputProcessor(inputProcessor);
     }
 
     @Override
